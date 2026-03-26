@@ -3,3 +3,4 @@ Before stars are born, there is a nebula — a vast, chaotic cloud of raw matter
 ## Experiments
 
 - **[KeePassXC](KeePassXC/)** — lightweight .NET client for KeePassXC. Sometimes we need secrets in our pipelines.
+- **[PostgresAot](PostgresAot/)** — PostgreSQL extension written entirely in C# via NativeAOT. No C code, 6.5 KB with bflat.

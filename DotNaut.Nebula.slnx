@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="KeePassXC/KeePassXC.csproj" />
+  <Project Path="PostgresAot/PgExtension.Aot/PgExtension.Aot.csproj" />
 </Solution>
