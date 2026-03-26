@@ -100,11 +100,11 @@ copy PgExtension.Aot\bin\Release\net10.0\win-x64\publish\pg_dotnet.dll "C:\Progr
 ### Register & Test (same for both)
 
 ```powershell
-psql -U postgres -p 5433 -d postgres -c "
+psql -U postgres -d postgres -c "
   CREATE OR REPLACE FUNCTION csharp_add(integer, integer) RETURNS integer
     AS 'pg_dotnet', 'pg_add' LANGUAGE C STRICT;
 "
-psql -U postgres -p 5433 -d postgres -c "SELECT csharp_add(2, 3);"
+psql -U postgres -d postgres -c "SELECT csharp_add(2, 3);"
 ```
 
 ## Project Structure
@@ -188,3 +188,7 @@ Making HTTP/network calls from within a PG extension:
   - Memory: .NET GC allocations during HTTP calls may pressure the PG process.
 - **Mitigation**: use synchronous calls with strict timeouts. Consider `background worker` process instead of in-query calls for heavy operations.
 - **Example target**: `SELECT http_get('https://api.example.com/data')` returning JSON as `text`.
+
+### 5. Background Workers
+
+PostgreSQL's Background Worker API (`bgworker.h`) allows extensions to register long-running processes inside the server. Use cases: TTL expiration, scheduled tasks, timer-based queue management. Would require `RegisterBackgroundWorker` via `[DllImport("postgres")]`. See also [PgKafkaWal](../PgKafkaWal/) roadmap for delayed retry / TTL scheduling scenarios.
