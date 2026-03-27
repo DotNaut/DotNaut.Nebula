@@ -35,4 +35,12 @@
     <IlcGenerateMapFile>true</IlcGenerateMapFile>
   </PropertyGroup>
 
+  <!-- Link against postgres.lib (import library for postgres.exe exports).
+       Pass PgLibDir explicitly: dotnet publish -p:PgLibDir="$(pg_config - -libdir)" -->
+  <ItemGroup>
+    <DirectPInvoke Include="postgres" />
+    <DirectPInvoke Include="kernel32" />
+    <NativeLibrary Include="$(PgLibDir)/postgres.lib" Condition="'$(PgLibDir)' != ''" />
+  </ItemGroup>
+
 </Project>

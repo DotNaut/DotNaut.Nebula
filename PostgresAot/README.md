@@ -24,6 +24,30 @@ postgres=# SELECT csharp_add(2147483600, 47);
  2147483647
 ```
 
+## Background Worker
+
+A C# NativeAOT background worker that inserts a row into `heartbeat` every second via SPI. Registers through `_PG_init` → `RegisterBackgroundWorker`, handles SIGTERM for graceful shutdown.
+
+Requires `shared_preload_libraries = 'pg_dotnet'` in `postgresql.conf` + server restart.
+
+```
+postgres=# SELECT * FROM heartbeat ORDER BY id DESC LIMIT 3;
+ id |              ts
+----+-------------------------------
+ 61 | 2026-03-27 07:33:41.224706+02
+ 60 | 2026-03-27 07:33:40.202972+02
+ 59 | 2026-03-27 07:33:39.182864+02
+```
+
+### PG 18 gotchas
+
+- **Struct layout changed** — `BGW_MAXLEN` = 96 (was 128). Field order in `BackgroundWorker` differs from older versions: `bgw_flags`/`bgw_start_time`/`bgw_restart_time` come before `bgw_library_name`. Always read `bgworker.h`.
+- **`pqsignal` → `pqsignal_be`** — backend signal handler renamed; old name not exported from `postgres.exe`.
+- **`DirectPInvoke`** required for `postgres` and `kernel32` in `.csproj` — without it, runtime DllImport resolution fails silently under aggressive trimming.
+- **`postgres.lib`** needed at link time for `DirectPInvoke`. Located via `pg_config --libdir`.
+- **Global variables** (`MyLatch`) resolved at runtime via `GetModuleHandleA(0)` + `GetProcAddress` (DllImport only works for functions).
+- **Deployment** — stop PostgreSQL before copying the DLL; `Copy-Item -Force` silently fails on locked files.
+
 ## How It Works
 
 PostgreSQL loads C extensions via `LoadLibrary` (Windows) / `dlopen` (Linux) and expects three types of exported symbols:
@@ -188,7 +212,3 @@ Making HTTP/network calls from within a PG extension:
   - Memory: .NET GC allocations during HTTP calls may pressure the PG process.
 - **Mitigation**: use synchronous calls with strict timeouts. Consider `background worker` process instead of in-query calls for heavy operations.
 - **Example target**: `SELECT http_get('https://api.example.com/data')` returning JSON as `text`.
-
-### 5. Background Workers
-
-PostgreSQL's Background Worker API (`bgworker.h`) allows extensions to register long-running processes inside the server. Use cases: TTL expiration, scheduled tasks, timer-based queue management. Would require `RegisterBackgroundWorker` via `[DllImport("postgres")]`. See also [PgKafkaWal](../PgKafkaWal/) roadmap for delayed retry / TTL scheduling scenarios.
