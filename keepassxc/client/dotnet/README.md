@@ -47,3 +47,7 @@ KeePassXC entries support custom string fields via "Advanced > Additional Attrib
 
 - The field name **must** start with `KPH: ` prefix (including the space after colon)
 - Fields without the `KPH: ` prefix are **not returned** by `GetLogins`
+
+## Mesh
+
+- Uses [KeePassXC](../../README.md) — browser integration protocol

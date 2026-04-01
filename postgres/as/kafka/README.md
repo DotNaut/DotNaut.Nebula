@@ -432,5 +432,11 @@ PostgreSQL scales more linearly because each SQL COMMIT is already a durable wri
 1. **Kafka benchmark on the same host** — run an actual Kafka instance, implement an equivalent producer/consumer in C#, and compare throughput and latency against PG replication under identical conditions.
 2. **Abstract the streaming pattern** — extract a common interface (publish/subscribe/ack) that works over both PG replication and Kafka, usable in .NET applications.
 3. **Advanced patterns** — research what PostgreSQL offers beyond Kafka: publication row filters (PG 15+), indexed queries on streamed data, `SKIP LOCKED` priority queues, delayed/scheduled retry via TTL tables. The key insight: Kafka-style streaming and Hangfire-style job queue patterns coexist in the same database.
-4. **Background worker for TTL/scheduling** — PostgreSQL's Background Worker API (`bgworker.h`) allows extensions to run scheduled tasks inside PG. Combined with [PostgresAot](../PostgresAot/), this could enable a C# NativeAOT background worker that handles TTL expiration, delayed retries, and timer-based queue management — no external schedulers needed.
+4. **Background worker for TTL/scheduling** — PostgreSQL's Background Worker API (`bgworker.h`) allows extensions to run scheduled tasks inside PG. Combined with [PostgresAot](../../../dotnet/aot/postgres-extension/), this could enable a C# NativeAOT background worker that handles TTL expiration, delayed retries, and timer-based queue management — no external schedulers needed.
 5. **Client overhead research** — measure how much latency/throughput is lost in the Npgsql client layer vs raw protocol. Explore a "Raw ORM" approach: mapping directly from the replication protocol stream to domain objects, bypassing intermediate structures (like `IDataReader` materializations). Need to investigate Npgsql's internal pipeline first.
+
+## Mesh
+
+- Part of [Postgres as...](../README.md)
+- Uses [Logical Replication](../../replication/logical.md)
+- Uses [WAL](../../wal/README.md)

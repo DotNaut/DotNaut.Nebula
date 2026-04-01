@@ -212,3 +212,8 @@ Making HTTP/network calls from within a PG extension:
   - Memory: .NET GC allocations during HTTP calls may pressure the PG process.
 - **Mitigation**: use synchronous calls with strict timeouts. Consider `background worker` process instead of in-query calls for heavy operations.
 - **Example target**: `SELECT http_get('https://api.example.com/data')` returning JSON as `text`.
+
+## Mesh
+
+- Uses [.NET AOT](../README.md)
+- Uses [PostgreSQL](../../../postgres/README.md) — extension system as target platform

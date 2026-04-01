@@ -1,5 +1,13 @@
 Before stars are born, there is a nebula — a vast, chaotic cloud of raw matter. This is ours. A collection of small, loosely connected experiments, prototypes, and wild ideas from the DotNaut universe.
 
+## Labs
+
+- [dotnet/aot/postgres-extension](dotnet/aot/postgres-extension/) — PostgreSQL extension in pure C# NativeAOT
+- [postgres/as/kafka](postgres/as/kafka/) — WAL replication as event streaming alternative
+- [keepassxc/client/dotnet](keepassxc/client/dotnet/) — lightweight .NET client for KeePassXC
+
+## Organization
+
 We are exploring a [mesh](infonomics/mesh/) concept to organize the chaos. Borrowing ideas from software design - single responsibility, abstractions, dependency direction - and applying them to knowledge. Each document is a node. Each `## Mesh` section declares its relationships, e.g.:
 - `Part of` - belongs to a parent subject
 - `Has` - contains child nodes
@@ -8,13 +16,18 @@ We are exploring a [mesh](infonomics/mesh/) concept to organize the chaos. Borro
 
 ## Subjects
 
+- **[dotnet](dotnet/)** — Microsoft's open-source development platform
+  - [aot/postgres-extension](dotnet/aot/postgres-extension/) — PostgreSQL extension in pure C# NativeAOT
+- **[postgres](postgres/)** — the most versatile open-source database
+  - [wal](postgres/wal/) — write-ahead log
+  - [replication/logical](postgres/replication/logical.md) — logical replication
+  - [as/kafka](postgres/as/kafka/) — WAL replication as event streaming alternative
 - **[ssh](ssh/)** — secure shell
   - [keygen](ssh/keygen.md) — key pair generation
   - [agent](ssh/agent.md) — key management in memory
 - **[windows](windows/)** — platform-specific setup
   - [ssh/agent](windows/ssh/agent.md) — OpenSSH Agent service
-- **[PostgresAot](PostgresAot/)** — PostgreSQL extension written entirely in C# via NativeAOT. No C code, 6.5 KB with bflat.
-- **[PgKafkaWal](PgKafkaWal/)** — PostgreSQL logical replication as a Kafka alternative.
 - **[keepassxc](keepassxc/)** — password manager
   - [ssh-agent-provider](keepassxc/ssh-agent-provider.md) — SSH key storage, injects into agent
   - [client/dotnet](keepassxc/client/dotnet/) — lightweight .NET client
+  
