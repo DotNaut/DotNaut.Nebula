@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json.Nodes;
 using NaCl;
 
-namespace KeePassXC;
+namespace DotNaut.KeePassXC;
 
 public class KeePassXCException(string message) : Exception(message);
 
