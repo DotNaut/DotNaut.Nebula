@@ -28,6 +28,7 @@ We are exploring a [mesh](infonomics/mesh/) concept to organize the chaos. Borro
 - **[windows](windows/)** — platform-specific setup
   - [ssh/agent](windows/ssh/agent.md) — OpenSSH Agent service
 - **[keepassxc](keepassxc/)** — password manager
-  - [ssh-agent-provider](keepassxc/ssh-agent-provider.md) — SSH key storage, injects into agent
+  - [cli](keepassxc/cli/) — command-line interface
+  - [ssh-agent-provider](keepassxc/ssh-agent-provider/) — SSH key storage, injects into agent
   - [client/dotnet](keepassxc/client/dotnet/) — lightweight .NET client
   

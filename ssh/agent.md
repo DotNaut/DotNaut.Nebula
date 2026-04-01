@@ -23,4 +23,4 @@ ssh-add keyfile     # add a key
 
 - Part of [SSH](README.md)
 - Implemented by [Windows SSH Agent](../windows/ssh/agent.md)
-- Used by [KeePassXC SSH Agent Provider](../keepassxc/ssh-agent-provider.md)
+- Used by [KeePassXC SSH Agent Provider](../keepassxc/ssh-agent-provider/)

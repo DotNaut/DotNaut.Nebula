@@ -8,4 +8,5 @@ Open-source password manager. Encrypted database (`.kdbx`), local-only, no cloud
 
 ## Mesh
 
-- Has [SSH Agent Provider](ssh-agent-provider.md) - store SSH keys, inject into agent
+- Has [CLI](cli/) - command-line interface
+- Has [SSH Agent Provider](ssh-agent-provider/) - store SSH keys, inject into agent
